@@ -9,7 +9,7 @@ import (
 
 type Storage struct {
 	filePath string
-	schemas  map[int]domain.Schema
+	schemas  map[string]domain.Schema
 }
 
 func NewStorage(filePath string) (*Storage, error) {
@@ -32,7 +32,7 @@ func NewStorage(filePath string) (*Storage, error) {
 		return nil, fmt.Errorf("error unmarshalling JSON: %v", err)
 	}
 
-	schemasMap := make(map[int]domain.Schema)
+	schemasMap := make(map[string]domain.Schema)
 	for _, schema := range schemas {
 		schemasMap[schema.SchemaID] = schema
 	}

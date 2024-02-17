@@ -10,8 +10,8 @@ import (
 
 type SchemaHandler interface {
 	Create(authorID string, schemaName string, tasks []domain.Task) (domain.Schema, error)
-	GetByID(id int) (domain.Schema, error)
-	DeleteByID(id int) error
+	GetByID(id string) (domain.Schema, error)
+	DeleteByID(id string) error
 }
 
 type SchemaServer struct {
@@ -45,7 +45,7 @@ func (s *SchemaServer) GetSchemaByID(ctx context.Context, req *schema_service.Ge
 	fmt.Println("START GetSchemaByID API")
 
 	// Invoke SchemaHandler for fetching the schema
-	schema, err := s.SchemaHandler.GetByID(int(req.SchemaId))
+	schema, err := s.SchemaHandler.GetByID(req.SchemaId)
 	if err != nil {
 		fmt.Println("Error calling SchemaHandler.GetByID: ", err)
 		return nil, err
@@ -65,7 +65,7 @@ func (s *SchemaServer) DeleteSchemaByID(ctx context.Context, req *schema_service
 	fmt.Println("START DeleteSchemaByID API")
 
 	// Invoke SchemaHandler for deleting the schema
-	err := s.SchemaHandler.DeleteByID(int(req.SchemaId))
+	err := s.SchemaHandler.DeleteByID(req.SchemaId)
 	if err != nil {
 		fmt.Println("Error calling SchemaHandler.DeleteByID: ", err)
 		return nil, err

@@ -24,24 +24,24 @@ message CreateSchemaResponse {
 }
 
 message GetSchemaByIDRequest {
-    int64 schema_id = 1;
+    string schema_id = 1;
 }
 
 message GetSchemaByIDResponse {
-    int64 schema_id = 1;
+    string schema_id = 1;
     Schema schema = 2;
 }
 
 message DeleteSchemaByIDRequest {
-    int64 schema_id = 1;
+    string schema_id = 1;
 }
 
 message DeleteSchemaByIDResponse {
-    int64 schema_id = 1;
+    string schema_id = 1;
 }
 
 message Schema {
-    int64 schema_id = 1;
+    string schema_id = 1;
     string author_id = 2;
     string schema_name = 3;
     google.protobuf.Timestamp created_at = 4;

@@ -15,7 +15,7 @@ import (
 
 func SchemaToGRPC(s *Schema) *schema_service.Schema {
 	return &schema_service.Schema{
-		SchemaId:   int64(s.SchemaID),
+		SchemaId:   s.SchemaID,
 		AuthorId:   s.AuthorID,
 		SchemaName: s.SchemaName,
 		CreatedAt:  convertTimestampFromTime(s.CreatedAt),
