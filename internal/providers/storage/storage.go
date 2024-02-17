@@ -78,7 +78,7 @@ func (s *Storage) CreateSchema(authorID string, schemaName string, tasks []domai
 	return domain.Schema{}, nil
 }
 
-func (s *Storage) GetSchemaByID(id int) (domain.Schema, error) {
+func (s *Storage) GetSchemaByID(id string) (domain.Schema, error) {
 	fmt.Println("START Storage.GetSchemaByID")
 
 	fmt.Println("END Storage.GetSchemaByID")
@@ -86,7 +86,7 @@ func (s *Storage) GetSchemaByID(id int) (domain.Schema, error) {
 
 }
 
-func (s *Storage) DeleteSchemaByID(id int) error {
+func (s *Storage) DeleteSchemaByID(id string) error {
 	fmt.Println("START Storage.DeleteSchemaByID")
 
 	fmt.Println("END Storage.DeleteSchemaByID")
