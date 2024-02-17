@@ -70,3 +70,26 @@ func createEmptyJSONFile(filePath string) error {
 	}
 	return nil
 }
+
+func (s *Storage) CreateSchema(authorID string, schemaName string, tasks []domain.Task) (domain.Schema, error) {
+	fmt.Println("START Storage.CreateSchema")
+
+	fmt.Println("END Storage.CreateSchema")
+	return domain.Schema{}, nil
+}
+
+func (s *Storage) GetSchemaByID(id int) (domain.Schema, error) {
+	fmt.Println("START Storage.GetSchemaByID")
+
+	fmt.Println("END Storage.GetSchemaByID")
+	return domain.Schema{}, nil
+
+}
+
+func (s *Storage) DeleteSchemaByID(id int) error {
+	fmt.Println("START Storage.DeleteSchemaByID")
+
+	fmt.Println("END Storage.DeleteSchemaByID")
+	return nil
+
+}
