@@ -17,7 +17,7 @@ type Task struct {
 }
 
 type Schema struct {
-	SchemaID   int64     `json:"schema_id"`
+	SchemaID   int       `json:"schema_id"`
 	AuthorID   string    `json:"author_id"`
 	SchemaName string    `json:"schema_name"`
 	CreatedAt  time.Time `json:"created_at"`
