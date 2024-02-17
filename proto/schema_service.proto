@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package alt_team.schema_service;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "./schema_service";
+
+service SchemaService {
+    rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse);
+    rpc GetSchemaByID(GetSchemaByIDRequest) returns (GetSchemaByIDResponse);
+    rpc DeleteSchemaByID(DeleteSchemaByIDRequest) returns (DeleteSchemaByIDResponse);
+}
+
+message CreateSchemaRequest {
+    string author_id = 1;
+    string schema_name = 2;
+    repeated Task tasks = 3;
+}
+
+message CreateSchemaResponse {
+    Schema schema = 1;
+}
+
+message GetSchemaByIDRequest {
+    int64 schema_id = 1;
+}
+
+message GetSchemaByIDResponse {
+    int64 schema_id = 1;
+    Schema schema = 2;
+}
+
+message DeleteSchemaByIDRequest {
+    int64 schema_id = 1;
+}
+
+message DeleteSchemaByIDResponse {
+    int64 schema_id = 1;
+}
+
+message Schema {
+    int64 schema_id = 1;
+    string author_id = 2;
+    string schema_name = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+    google.protobuf.Timestamp deleted_at = 6;
+    repeated Task tasks = 7;
+} 
+
+message Task {
+    int64 id = 1; // id of the task (unique for this schema)
+    int32 level = 2; // level of the task
+    string name = 3; //name aof the task
+    TaskStatus status = 4; //status of the task
+    repeated int64 blocked_by = 5; // id of the task that block it
+    string responsible = 6; // person responsible for this task
+    int64 time_limit = 7; // time limit for task in minutes
+    repeated Task children = 8; // subtasks of this task 
+    google.protobuf.StringValue comment = 9; // comment
+}
+
+enum TaskStatus {
+    TASK_STATUS_UNSPECIFIED = 0;
+    TASK_STATUS_NOT_STARTED = 1;
+    TASK_STATUS_IN_PROGRESS = 2;
+    TASK_STATUS_BLOCKED = 3;
+    TASK_STATUS_DONE = 4;
+}
