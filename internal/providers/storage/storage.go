@@ -3,8 +3,12 @@ package storage
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"server/internal/domain"
+	"time"
+
+	"github.com/google/uuid"
 )
 
 type Storage struct {
@@ -74,20 +78,73 @@ func createEmptyJSONFile(filePath string) error {
 func (s *Storage) CreateSchema(authorID string, schemaName string, tasks []domain.Task) (domain.Schema, error) {
 	fmt.Println("START Storage.CreateSchema")
 
+	// Generate SchemaID
+	id := uuid.New().String()
+	for { // to avoid (really improbable) collisions
+		if _, ok := s.schemas[id]; !ok {
+			break
+		}
+		id = uuid.New().String()
+	}
+
+	// Create Schema
+	schema := domain.Schema{
+		SchemaID:   id,
+		AuthorID:   authorID,
+		SchemaName: schemaName,
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
+		Tasks:      tasks,
+	}
+
+	// Store in the storage
+	s.schemas[id] = schema
+
+	// Save database
+	err := s.SaveToFile()
+	if err != nil {
+		delete(s.schemas, id) // revert changes to avoid broken state
+		log.Fatalf("error saving storage to file: %v", err)
+		return domain.Schema{}, fmt.Errorf("internal error while creation")
+	}
+
 	fmt.Println("END Storage.CreateSchema")
-	return domain.Schema{}, nil
+	return schema, nil
 }
 
 func (s *Storage) GetSchemaByID(id string) (domain.Schema, error) {
 	fmt.Println("START Storage.GetSchemaByID")
 
+	// Get schema and check existance
+	schema, ok := s.schemas[id]
+	if !ok {
+		return domain.Schema{}, fmt.Errorf("schema with id=<%s> not found", id)
+	}
+
 	fmt.Println("END Storage.GetSchemaByID")
-	return domain.Schema{}, nil
+	return schema, nil
 
 }
 
 func (s *Storage) DeleteSchemaByID(id string) error {
 	fmt.Println("START Storage.DeleteSchemaByID")
+
+	// Get schema and check existance
+	schema, ok := s.schemas[id]
+	if !ok {
+		return fmt.Errorf("schema with id=<%s> not found", id)
+	}
+
+	// Delete schema from storage
+	delete(s.schemas, id)
+
+	// Save database
+	err := s.SaveToFile()
+	if err != nil {
+		s.schemas[id] = schema // revert changes to avoid broken state
+		log.Fatalf("error saving storage to file: %v", err)
+		return fmt.Errorf("internal error while deletion")
+	}
 
 	fmt.Println("END Storage.DeleteSchemaByID")
 	return nil

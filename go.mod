@@ -4,6 +4,7 @@ go 1.21.5
 
 require (
 	github.com/golang/protobuf v1.5.3
+	github.com/google/uuid v1.4.0
 	google.golang.org/grpc v1.61.0
 	google.golang.org/protobuf v1.31.0
 )
