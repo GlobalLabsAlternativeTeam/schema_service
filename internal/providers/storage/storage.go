@@ -12,11 +12,12 @@ import (
 )
 
 type Storage struct {
-	filePath string
-	schemas  map[string]domain.Schema
+	filePath        string
+	schemas         map[string]domain.Schema
+	avoidSavingFile bool
 }
 
-func NewStorage(filePath string) (*Storage, error) {
+func NewStorage(filePath string, avoidSavingFile bool) (*Storage, error) {
 	// Check if the file exists
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		// If the file doesn't exist, create an empty JSON file
@@ -42,12 +43,17 @@ func NewStorage(filePath string) (*Storage, error) {
 	}
 
 	return &Storage{
-		filePath: filePath,
-		schemas:  schemasMap,
+		filePath:        filePath,
+		schemas:         schemasMap,
+		avoidSavingFile: avoidSavingFile,
 	}, nil
 }
 
 func (s *Storage) SaveToFile() error {
+	if !s.avoidSavingFile {
+		return nil
+	}
+
 	schemasSlice := make([]domain.Schema, 0, len(s.schemas))
 	for _, schema := range s.schemas {
 		schemasSlice = append(schemasSlice, schema)
@@ -130,7 +136,6 @@ func (s *Storage) GetSchemaByID(id string) (domain.Schema, error) {
 
 	fmt.Println("END Storage.GetSchemaByID")
 	return schema, nil
-
 }
 
 func (s *Storage) DeleteSchemaByID(id string) error {
@@ -155,5 +160,4 @@ func (s *Storage) DeleteSchemaByID(id string) error {
 
 	fmt.Println("END Storage.DeleteSchemaByID")
 	return nil
-
 }

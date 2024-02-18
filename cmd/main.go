@@ -21,7 +21,7 @@ func main() {
 	}
 
 	// Create instances of your dependencies (handlers, storage, etc.)
-	storageService, err := storage.NewStorage("./data/storage.json")
+	storageService, err := storage.NewStorage("./data/storage.json", false)
 	if err != nil {
 		log.Fatalf("Failed to create storage: %v", err)
 	}
