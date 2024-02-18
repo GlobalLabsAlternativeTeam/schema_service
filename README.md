@@ -35,6 +35,15 @@ protoc --go_out=. --go_opt=paths=source_relative \
     proto/schema_service.proto
 ```
 
+### Extra: generating example data
+
+We provide a script to generate some example data located in `~/cmd/scripts/gen_data.go`.
+To execute this, run the following command from the root directory:
+
+```bash
+go run cmd/scripts/gen_data.go
+```
+
 ### Running the service
 
 You can now launch the service using:
@@ -43,11 +52,10 @@ You can now launch the service using:
 go run cmd/main.go
 ```
 
-### Extra: generating example data
+### Running tests
 
-We provide a script to generate some example data located in `~/cmd/scripts/gen_data.go`.
-To execute this, run the following command from the root directory:
+If you want to execute the tests, please run:
 
 ```bash
-go run cmd/scripts/gen_data.go
+go test ./...
 ```

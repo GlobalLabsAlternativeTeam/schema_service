@@ -50,7 +50,7 @@ func NewStorage(filePath string, avoidSavingFile bool) (*Storage, error) {
 }
 
 func (s *Storage) SaveToFile() error {
-	if !s.avoidSavingFile {
+	if s.avoidSavingFile {
 		return nil
 	}
 
