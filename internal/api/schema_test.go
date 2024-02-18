@@ -111,7 +111,6 @@ func (msh *MockSchemaHandler) DeleteByID(id string) error {
 // Tests
 
 func TestCreateSchema(t *testing.T) {
-	// Create instances of your dependencies (handlers, storage, etc.)
 	mockHandler := &MockSchemaHandler{}
 	apiHandler := api.SchemaServer{SchemaHandler: mockHandler}
 
@@ -125,7 +124,6 @@ func TestCreateSchema(t *testing.T) {
 
 		if err == nil {
 			t.Errorf("Expected error, got nil")
-			return
 		}
 	})
 
@@ -193,7 +191,6 @@ func TestCreateSchema(t *testing.T) {
 }
 
 func TestGetSchemaByID(t *testing.T) {
-	// Create instances of your dependencies (handlers, storage, etc.)
 	mockHandler := &MockSchemaHandler{}
 	apiHandler := api.SchemaServer{SchemaHandler: mockHandler}
 
@@ -205,7 +202,6 @@ func TestGetSchemaByID(t *testing.T) {
 
 		if err == nil {
 			t.Errorf("Expected error, got nil")
-			return
 		}
 	})
 
@@ -236,7 +232,6 @@ func TestGetSchemaByID(t *testing.T) {
 }
 
 func TestDeleteSchemaByID(t *testing.T) {
-	// Create instances of your dependencies (handlers, storage, etc.)
 	mockHandler := &MockSchemaHandler{}
 	apiHandler := api.SchemaServer{SchemaHandler: mockHandler}
 
@@ -248,7 +243,6 @@ func TestDeleteSchemaByID(t *testing.T) {
 
 		if err == nil {
 			t.Errorf("Expected error, got nil")
-			return
 		}
 	})
 
