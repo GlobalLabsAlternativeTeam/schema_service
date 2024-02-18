@@ -78,6 +78,13 @@ func createEmptyJSONFile(filePath string) error {
 func (s *Storage) CreateSchema(authorID string, schemaName string, tasks []domain.Task) (domain.Schema, error) {
 	fmt.Println("START Storage.CreateSchema")
 
+	// Check if SchemaName is already used
+	for _, existingSchema := range s.schemas {
+		if existingSchema.SchemaName == schemaName {
+			return domain.Schema{}, fmt.Errorf("schema with name '%s' already exists", schemaName)
+		}
+	}
+
 	// Generate SchemaID
 	id := uuid.New().String()
 	for { // to avoid (really improbable) collisions
