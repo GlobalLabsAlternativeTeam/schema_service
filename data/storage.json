@@ -1,1 +1,222 @@
-[]
+[
+    {
+        "schema_id": "325b3c68-5963-40d5-9009-5ebdcc181722",
+        "author_id": "Author1",
+        "schema_name": "Schema2",
+        "created_at": "2024-02-18T01:20:50.657925744+01:00",
+        "updated_at": "2024-02-18T01:20:50.657925784+01:00",
+        "deleted_at": "0001-01-01T00:00:00Z",
+        "tasks": [
+            {
+                "id": 1,
+                "level": 1,
+                "name": "Task 1",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor1",
+                "time_limit": 3600,
+                "children": [],
+                "comment": {
+                    "value": "Comment for Task 1"
+                }
+            },
+            {
+                "id": 2,
+                "level": 1,
+                "name": "Task 3",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor3",
+                "time_limit": 5400,
+                "children": [
+                    {
+                        "id": 3,
+                        "level": 2,
+                        "name": "Task 2",
+                        "status": "NOT_STARTED",
+                        "blocked_by": [],
+                        "responsible": "Doctor2",
+                        "time_limit": 7200,
+                        "children": [],
+                        "comment": {
+                            "value": "Comment for Task 2"
+                        }
+                    }
+                ],
+                "comment": {
+                    "value": "Comment for Task 3"
+                }
+            }
+        ]
+    },
+    {
+        "schema_id": "c600721c-a387-4f99-8237-516ea763fdca",
+        "author_id": "Author2",
+        "schema_name": "Schema3",
+        "created_at": "2024-02-18T01:20:50.658074607+01:00",
+        "updated_at": "2024-02-18T01:20:50.658074647+01:00",
+        "deleted_at": "0001-01-01T00:00:00Z",
+        "tasks": [
+            {
+                "id": 2,
+                "level": 1,
+                "name": "Task 3",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor3",
+                "time_limit": 5400,
+                "children": [
+                    {
+                        "id": 3,
+                        "level": 2,
+                        "name": "Task 2",
+                        "status": "NOT_STARTED",
+                        "blocked_by": [],
+                        "responsible": "Doctor2",
+                        "time_limit": 7200,
+                        "children": [],
+                        "comment": {
+                            "value": "Comment for Task 2"
+                        }
+                    }
+                ],
+                "comment": {
+                    "value": "Comment for Task 3"
+                }
+            }
+        ]
+    },
+    {
+        "schema_id": "99592c11-61e5-40a0-8818-aa0dc10884a0",
+        "author_id": "Author1",
+        "schema_name": "Schema1",
+        "created_at": "2024-02-18T01:23:45.661318425+01:00",
+        "updated_at": "2024-02-18T01:23:45.661318475+01:00",
+        "deleted_at": "0001-01-01T00:00:00Z",
+        "tasks": [
+            {
+                "id": 1,
+                "level": 1,
+                "name": "Task 1",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor1",
+                "time_limit": 3600,
+                "children": [],
+                "comment": {
+                    "value": "Comment for Task 1"
+                }
+            }
+        ]
+    },
+    {
+        "schema_id": "06ae642a-8a47-4edf-bd6d-5b22d5753eb9",
+        "author_id": "Author1",
+        "schema_name": "Schema2",
+        "created_at": "2024-02-18T01:23:45.661546458+01:00",
+        "updated_at": "2024-02-18T01:23:45.661546528+01:00",
+        "deleted_at": "0001-01-01T00:00:00Z",
+        "tasks": [
+            {
+                "id": 1,
+                "level": 1,
+                "name": "Task 1",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor1",
+                "time_limit": 3600,
+                "children": [],
+                "comment": {
+                    "value": "Comment for Task 1"
+                }
+            },
+            {
+                "id": 2,
+                "level": 1,
+                "name": "Task 3",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor3",
+                "time_limit": 5400,
+                "children": [
+                    {
+                        "id": 3,
+                        "level": 2,
+                        "name": "Task 2",
+                        "status": "NOT_STARTED",
+                        "blocked_by": [],
+                        "responsible": "Doctor2",
+                        "time_limit": 7200,
+                        "children": [],
+                        "comment": {
+                            "value": "Comment for Task 2"
+                        }
+                    }
+                ],
+                "comment": {
+                    "value": "Comment for Task 3"
+                }
+            }
+        ]
+    },
+    {
+        "schema_id": "f29d669d-05a6-4df1-8f49-cc24999eb331",
+        "author_id": "Author2",
+        "schema_name": "Schema3",
+        "created_at": "2024-02-18T01:23:45.661917281+01:00",
+        "updated_at": "2024-02-18T01:23:45.661917331+01:00",
+        "deleted_at": "0001-01-01T00:00:00Z",
+        "tasks": [
+            {
+                "id": 2,
+                "level": 1,
+                "name": "Task 3",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor3",
+                "time_limit": 5400,
+                "children": [
+                    {
+                        "id": 3,
+                        "level": 2,
+                        "name": "Task 2",
+                        "status": "NOT_STARTED",
+                        "blocked_by": [],
+                        "responsible": "Doctor2",
+                        "time_limit": 7200,
+                        "children": [],
+                        "comment": {
+                            "value": "Comment for Task 2"
+                        }
+                    }
+                ],
+                "comment": {
+                    "value": "Comment for Task 3"
+                }
+            }
+        ]
+    },
+    {
+        "schema_id": "5887102d-8f6d-4292-b431-a6edae9f7e3d",
+        "author_id": "Author1",
+        "schema_name": "Schema1",
+        "created_at": "2024-02-18T01:20:50.65771309+01:00",
+        "updated_at": "2024-02-18T01:20:50.65771314+01:00",
+        "deleted_at": "0001-01-01T00:00:00Z",
+        "tasks": [
+            {
+                "id": 1,
+                "level": 1,
+                "name": "Task 1",
+                "status": "NOT_STARTED",
+                "blocked_by": [],
+                "responsible": "Doctor1",
+                "time_limit": 3600,
+                "children": [],
+                "comment": {
+                    "value": "Comment for Task 1"
+                }
+            }
+        ]
+    }
+]
