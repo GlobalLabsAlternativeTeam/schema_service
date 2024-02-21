@@ -9,6 +9,7 @@ option go_package = "./schema_service";
 
 service SchemaService {
     rpc CreateSchema(CreateSchemaRequest) returns (CreateSchemaResponse);
+    rpc GetAllSchemas(GetAllSchemasRequest) returns (GetAllSchemasResponse);
     rpc GetSchemaByID(GetSchemaByIDRequest) returns (GetSchemaByIDResponse);
     rpc DeleteSchemaByID(DeleteSchemaByIDRequest) returns (DeleteSchemaByIDResponse);
 }
@@ -22,6 +23,14 @@ message CreateSchemaRequest {
 message CreateSchemaResponse {
     Schema schema = 1;
 }
+
+message GetAllSchemasRequest {
+}
+
+message GetAllSchemasResponse {
+    repeated Schema schemas = 1;
+}
+
 
 message GetSchemaByIDRequest {
     string schema_id = 1;

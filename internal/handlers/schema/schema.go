@@ -7,6 +7,7 @@ import (
 
 type StorageInterface interface {
 	CreateSchema(authorID string, schemaName string, tasks []domain.Task) (domain.Schema, error)
+	GetAllSchemas() ([]domain.Schema, error)
 	GetSchemaByID(id string) (domain.Schema, error)
 	DeleteSchemaByID(id string) error
 }
@@ -26,6 +27,19 @@ func (s *Schema) Create(authorID string, schemaName string, tasks []domain.Task)
 
 	fmt.Println("END Schema.Create handler")
 	return schema, err
+}
+
+func (s *Schema) GetAll() ([]domain.Schema, error) {
+	fmt.Println("START Schema.GetAll handler")
+
+	// Forward fetch to Storage
+	schemas, err := s.StorageProvider.GetAllSchemas()
+	if err != nil {
+		fmt.Printf("Error getting all Schemas: %s\n", err)
+	}
+
+	fmt.Println("END Schema.GetAll handler")
+	return schemas, err
 }
 
 func (s *Schema) GetByID(id string) (domain.Schema, error) {

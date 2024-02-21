@@ -3,6 +3,7 @@ package api_test
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"server/internal/api"
 	"server/internal/domain"
 	schema_service "server/proto"
@@ -24,7 +25,16 @@ var domain_schema domain.Schema = domain.Schema{
 	UpdatedAt:  now,
 	Tasks:      []domain.Task{},
 }
+var domain_schema_2 domain.Schema = domain.Schema{
+	SchemaID:   schema_id + "2",
+	AuthorID:   "authorID2",
+	SchemaName: "schemaName2",
+	CreatedAt:  now,
+	UpdatedAt:  now,
+	Tasks:      []domain.Task{},
+}
 var grpc_schema schema_service.Schema = *domain.SchemaToGRPC(&domain_schema)
+var grpc_schema_2 schema_service.Schema = *domain.SchemaToGRPC(&domain_schema_2)
 
 var task1 schema_service.Task = schema_service.Task{
 	Id:          1,
@@ -81,6 +91,10 @@ func (msh *MockSchemaHandler) Create(authorID string, schemaName string, tasks [
 	}
 
 	return schema, nil
+}
+
+func (msh *MockSchemaHandler) GetAll() ([]domain.Schema, error) {
+	return []domain.Schema{domain_schema, domain_schema_2}, nil
 }
 
 func (msh *MockSchemaHandler) GetByID(id string) (domain.Schema, error) {
@@ -186,6 +200,32 @@ func TestCreateSchema(t *testing.T) {
 
 		if len(expectedTasks) != len(schema.Tasks) {
 			t.Errorf("Expected %d tasks, got %d", len(expectedTasks), len(schema.Tasks))
+		}
+	})
+}
+
+func TestGetAllSchemas(t *testing.T) {
+	mockHandler := &MockSchemaHandler{}
+	apiHandler := api.SchemaServer{SchemaHandler: mockHandler}
+
+	t.Run("GetSchemas", func(t *testing.T) {
+		request := schema_service.GetAllSchemasRequest{}
+		response, err := apiHandler.GetAllSchemas(context.Background(), &request)
+
+		if err != nil {
+			t.Errorf("Unexpected error: %v", err)
+		}
+
+		expectedSchemas := []*schema_service.Schema{&grpc_schema, &grpc_schema_2}
+		schemas := response.Schemas
+
+		if len(schemas) != len(expectedSchemas) {
+			t.Errorf("Expected len(schemas)='%d', but found: %d", len(expectedSchemas), len(schemas))
+		}
+
+		// Received expected schemas
+		if !reflect.DeepEqual(expectedSchemas, schemas) {
+			t.Errorf("Expected schemas %+v, got %+v", expectedSchemas, schemas)
 		}
 	})
 }

@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SchemaServiceClient interface {
 	CreateSchema(ctx context.Context, in *CreateSchemaRequest, opts ...grpc.CallOption) (*CreateSchemaResponse, error)
+	GetAllSchemas(ctx context.Context, in *GetAllSchemasRequest, opts ...grpc.CallOption) (*GetAllSchemasResponse, error)
 	GetSchemaByID(ctx context.Context, in *GetSchemaByIDRequest, opts ...grpc.CallOption) (*GetSchemaByIDResponse, error)
 	DeleteSchemaByID(ctx context.Context, in *DeleteSchemaByIDRequest, opts ...grpc.CallOption) (*DeleteSchemaByIDResponse, error)
 }
@@ -38,6 +39,15 @@ func NewSchemaServiceClient(cc grpc.ClientConnInterface) SchemaServiceClient {
 func (c *schemaServiceClient) CreateSchema(ctx context.Context, in *CreateSchemaRequest, opts ...grpc.CallOption) (*CreateSchemaResponse, error) {
 	out := new(CreateSchemaResponse)
 	err := c.cc.Invoke(ctx, "/alt_team.schema_service.SchemaService/CreateSchema", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schemaServiceClient) GetAllSchemas(ctx context.Context, in *GetAllSchemasRequest, opts ...grpc.CallOption) (*GetAllSchemasResponse, error) {
+	out := new(GetAllSchemasResponse)
+	err := c.cc.Invoke(ctx, "/alt_team.schema_service.SchemaService/GetAllSchemas", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,6 +77,7 @@ func (c *schemaServiceClient) DeleteSchemaByID(ctx context.Context, in *DeleteSc
 // for forward compatibility
 type SchemaServiceServer interface {
 	CreateSchema(context.Context, *CreateSchemaRequest) (*CreateSchemaResponse, error)
+	GetAllSchemas(context.Context, *GetAllSchemasRequest) (*GetAllSchemasResponse, error)
 	GetSchemaByID(context.Context, *GetSchemaByIDRequest) (*GetSchemaByIDResponse, error)
 	DeleteSchemaByID(context.Context, *DeleteSchemaByIDRequest) (*DeleteSchemaByIDResponse, error)
 	mustEmbedUnimplementedSchemaServiceServer()
@@ -78,6 +89,9 @@ type UnimplementedSchemaServiceServer struct {
 
 func (UnimplementedSchemaServiceServer) CreateSchema(context.Context, *CreateSchemaRequest) (*CreateSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSchema not implemented")
+}
+func (UnimplementedSchemaServiceServer) GetAllSchemas(context.Context, *GetAllSchemasRequest) (*GetAllSchemasResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllSchemas not implemented")
 }
 func (UnimplementedSchemaServiceServer) GetSchemaByID(context.Context, *GetSchemaByIDRequest) (*GetSchemaByIDResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSchemaByID not implemented")
@@ -112,6 +126,24 @@ func _SchemaService_CreateSchema_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchemaServiceServer).CreateSchema(ctx, req.(*CreateSchemaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SchemaService_GetAllSchemas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllSchemasRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchemaServiceServer).GetAllSchemas(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/alt_team.schema_service.SchemaService/GetAllSchemas",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchemaServiceServer).GetAllSchemas(ctx, req.(*GetAllSchemasRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -162,6 +194,10 @@ var SchemaService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateSchema",
 			Handler:    _SchemaService_CreateSchema_Handler,
+		},
+		{
+			MethodName: "GetAllSchemas",
+			Handler:    _SchemaService_GetAllSchemas_Handler,
 		},
 		{
 			MethodName: "GetSchemaByID",

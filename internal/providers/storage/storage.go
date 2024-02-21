@@ -125,6 +125,19 @@ func (s *Storage) CreateSchema(authorID string, schemaName string, tasks []domai
 	return schema, nil
 }
 
+func (s *Storage) GetAllSchemas() ([]domain.Schema, error) {
+	fmt.Println("START Storage.GetAllSchemas")
+
+	// Convert schemas to array
+	var schemas []domain.Schema
+	for _, schema := range s.schemas {
+		schemas = append(schemas, schema)
+	}
+
+	fmt.Println("END Storage.GetAllSchemas")
+	return schemas, nil
+}
+
 func (s *Storage) GetSchemaByID(id string) (domain.Schema, error) {
 	fmt.Println("START Storage.GetSchemaByID")
 

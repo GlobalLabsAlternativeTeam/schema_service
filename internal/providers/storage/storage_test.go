@@ -41,6 +41,26 @@ func TestCreateSchema(t *testing.T) {
 	})
 }
 
+func TestGetAllSchemas(t *testing.T) {
+	storageService, err := storage.NewStorage("./test_storage.json", true)
+	if err != nil {
+		t.Errorf("Failed to create storage: %v", err)
+	}
+
+	t.Run("All schemas", func(t *testing.T) {
+		expectedSchemasLen := 3
+		foundSchemas, err := storageService.GetAllSchemas()
+
+		if err != nil {
+			t.Errorf("Expected no error, got %v", err)
+		}
+
+		if len(foundSchemas) != expectedSchemasLen {
+			t.Errorf("Expected len(schemas)='%d', found: %d", expectedSchemasLen, len(foundSchemas))
+		}
+	})
+}
+
 func TestGetSchemaByID(t *testing.T) {
 	storageService, err := storage.NewStorage("./test_storage.json", true)
 	if err != nil {

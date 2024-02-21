@@ -10,6 +10,7 @@ import (
 
 type SchemaHandler interface {
 	Create(authorID string, schemaName string, tasks []domain.Task) (domain.Schema, error)
+	GetAll() ([]domain.Schema, error)
 	GetByID(id string) (domain.Schema, error)
 	DeleteByID(id string) error
 }
@@ -38,6 +39,31 @@ func (s *SchemaServer) CreateSchema(ctx context.Context, req *schema_service.Cre
 	}
 
 	fmt.Println("END CreateSchema API")
+	return response, nil
+}
+
+func (s *SchemaServer) GetAllSchemas(ctx context.Context, req *schema_service.GetAllSchemasRequest) (*schema_service.GetAllSchemasResponse, error) {
+	fmt.Println("START GetAllSchemas API")
+
+	// Invoke SchemaHandler for fetching the schema
+	schemas, err := s.SchemaHandler.GetAll()
+	if err != nil {
+		fmt.Println("Error calling SchemaHandler.GetAll: ", err)
+		return nil, err
+	}
+
+	// Convert to gRPC objects
+	var grpcSchemas []*schema_service.Schema
+	for _, schema := range schemas {
+		grpcSchemas = append(grpcSchemas, domain.SchemaToGRPC(&schema))
+	}
+
+	// Create and return gRPC response object
+	response := &schema_service.GetAllSchemasResponse{
+		Schemas: grpcSchemas,
+	}
+
+	fmt.Println("END GetAllSchemas API")
 	return response, nil
 }
 

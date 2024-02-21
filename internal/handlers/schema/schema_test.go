@@ -2,6 +2,7 @@ package schema_test
 
 import (
 	"fmt"
+	"reflect"
 	"server/internal/domain"
 	"server/internal/handlers/schema"
 	"testing"
@@ -16,6 +17,14 @@ var domainSchema domain.Schema = domain.Schema{
 	SchemaID:   schemaId,
 	AuthorID:   "authorID",
 	SchemaName: "schemaName",
+	CreatedAt:  now,
+	UpdatedAt:  now,
+	Tasks:      []domain.Task{},
+}
+var domainSchema2 domain.Schema = domain.Schema{
+	SchemaID:   schemaId + "2",
+	AuthorID:   "authorID2",
+	SchemaName: "schemaName2",
 	CreatedAt:  now,
 	UpdatedAt:  now,
 	Tasks:      []domain.Task{},
@@ -84,6 +93,10 @@ func (msp *MockStorageProvider) CreateSchema(authorID string, schemaName string,
 	}
 
 	return schema, nil
+}
+
+func (msp *MockStorageProvider) GetAllSchemas() ([]domain.Schema, error) {
+	return []domain.Schema{domainSchema, domainSchema2}, nil
 }
 
 func (msp *MockStorageProvider) GetSchemaByID(id string) (domain.Schema, error) {
@@ -164,6 +177,30 @@ func TestCreate(t *testing.T) {
 		if len(createdSchema.Tasks) != len(expectedTasks) {
 			t.Errorf("Expected %d tasks, got %d", len(expectedTasks), len(createdSchema.Tasks))
 		}
+	})
+}
+
+func TestGetAll(t *testing.T) {
+	mockStorageProvider := &MockStorageProvider{}
+	schemaService := &schema.Schema{StorageProvider: mockStorageProvider}
+
+	t.Run("GetAll", func(t *testing.T) {
+		foundSchemas, err := schemaService.GetAll()
+		expectedSchemas := []domain.Schema{domainSchema, domainSchema2}
+
+		if err != nil {
+			t.Errorf("Unexpected error: %v", err)
+		}
+
+		if len(foundSchemas) != len(expectedSchemas) {
+			t.Errorf("Expected len(schemas)='%d', found: %d", len(expectedSchemas), len(foundSchemas))
+		}
+
+		// Same results
+		if !reflect.DeepEqual(expectedSchemas, foundSchemas) {
+			t.Errorf("Expected schemas %+v, got %+v", expectedSchemas, foundSchemas)
+		}
+
 	})
 }
 
